@@ -17,7 +17,6 @@
 #define DISPLAY_OFF 0xAE
 #define SOFTWARE_RESET 0x2E
 #define POWER_CONTROL 0x2F
-#define START_FROM_LINE0 0X40
 
 #define swap(a,b) {uint8_t t =a; a =b; b =t;}
 
@@ -43,7 +42,7 @@ class homephone: public Print{
 	void setTextColor(uint8_t color, uint8_t bgColor);
 	void drawChar(uint8_t x, uint8_t y, unsigned char c, uint8_t color, uint8_t bg);
 	
-	void drawBitmap(uint16_t x, uint16_t y, const uint8_t *bitmap, uint16_t w, uint16_t h, uint16_t color);
+	void drawBitmap();
 	
 	virtual size_t write(uint8_t);
 	
