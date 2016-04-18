@@ -20,7 +20,11 @@ if there is any thing you want to ask please contact me:
 Contact name: TRAN NHAT THANH
 Email address: NHATTHANH228@GMAIL.COM
 i'd really appreciate if you send us any feedback. 
+
+version 1.1 fixed start line from nowhere.
 */
+
+
 
 #include "Arduino.h"
 #include "pins_arduino.h"
@@ -82,7 +86,7 @@ void homephone::begin(void){
 	lcdWrite(0, 0x26); //regulation ratio
 	lcdWrite(0, 0x2F);
 	lcdWrite(0, 0xA4);
-	
+	lcdWrite(0, START_FROM_LINE0);
 	//for debuging 
 	#ifdef debug
 		Serial.begin(9600);
@@ -359,6 +363,19 @@ void homephone::setTextColor(uint8_t color, uint8_t bgColor){
 	textBgColor = bgColor;
 }
 
+void homephone::drawBitmap(uint16_t x, uint16_t y, const uint8_t *bitmap, uint16_t w, uint16_t h, uint16_t color){
+  int16_t i, j, byteWidth = (w + 7) / 8;
+
+  for(j=0; j<h; j++) {
+    for(i=0; i<w; i++ ) {
+      if(pgm_read_byte(bitmap + j * byteWidth + i / 8) & (128 >> (i & 7))) {
+        drawPixel(x+i, y+j, color);
+      }
+    }
+  }
+}	
+
+
 size_t homephone::write(uint8_t c){
 	if ( c == '\n'){
 		cursor_y += 8;
@@ -372,6 +389,7 @@ size_t homephone::write(uint8_t c){
 		cursor_x +=6;
 	}
 }	
+
 	
 	
 	
