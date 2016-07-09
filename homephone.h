@@ -1,5 +1,5 @@
 
-#include "Arduino.h";
+//#include "Arduino.h";
 #include "pins_arduino.h"
 #include "Print.h"
 
@@ -42,7 +42,7 @@ class homephone: public Print{
 	void setTextColor(uint8_t color, uint8_t bgColor);
 	void drawChar(uint8_t x, uint8_t y, unsigned char c, uint8_t color, uint8_t bg);
 	
-	void drawBitmap();
+	void drawBitmap(uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color, uint8_t bg);
 	
 	virtual size_t write(uint8_t);
 	
