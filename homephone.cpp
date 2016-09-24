@@ -349,7 +349,7 @@ void homephone::drawChar (uint8_t x, uint8_t y, unsigned char c, uint8_t color, 
 	}
 }
 
-void homephone::drawBitmap (uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color, uint8_t bg){
+/* void homephone::drawBitmap (uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color, uint8_t bg){
 	//byte reader;
 	int k =0; 
 	for (int i =0 ; i <w; i ++){
@@ -367,7 +367,21 @@ void homephone::drawBitmap (uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t
 			}
 		}
 	}
-} 
+} */
+
+void homephone::drawBitmap(uint8_t x, uint8_t y, const uint8_t * bitmap, uint8_t w, uint8_t h, uint8_t color, uint8_t bg){
+	int16_t i, j, byteWidth = (w+7)/8;  //caculate the byte need to use for width. for example if the picture is 16x16 then the number of byte use to represent width will be (16+7)/8 = 2
+	for (i =0; i <h; i ++){
+		for (j =0; j <w; j++){
+			if (pgm_read_byte(bitmap+(i* byteWidth+j/8))&(128>>(j&7))){ //this pgm_read_byte(bitmap+(i* byteWidth+j/8))&(128>>(j&7))) is used to read only one bit in the byte of Pixel which need to represent. if there is a pixel then function will return 1, if no then 0.
+				drawPixel(x+j, y+i, color); //if the function above return 1 then put a black pixel to that current position.
+			}
+			else{
+				drawPixel(x+j, y+i, bg);// if not then put a white pixel on that current position.
+			}
+		}
+	}
+}
 
 void homephone::setCursor(uint8_t x, uint8_t y){
 	cursor_x = x;
